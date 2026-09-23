@@ -8,11 +8,13 @@ import {
   Info, 
   FileJson, 
   FileText,
-  AlertTriangle
+  AlertTriangle,
+  BookOpen
 } from 'lucide-react';
 import { BusinessProfile } from '../types';
 import { StorageService } from '../lib/storage';
 import { Modal } from '../components/Modal';
+import { QUICK_START_GUIDE_TEXT } from '../data/guideContent';
 
 interface SettingsViewProps {
   businessProfile: BusinessProfile;
@@ -78,6 +80,17 @@ ${data.content?.map((g: any) => `* ${g.title} (${g.contentType})\n  Hook: ${g.ho
     onShowToast('Exported complete plain text report!', 'success');
   };
 
+  const handleDownloadGuide = () => {
+    const blob = new Blob([QUICK_START_GUIDE_TEXT], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'LocalBiz-Kit-Quick-Start-Guide.md';
+    a.click();
+    URL.revokeObjectURL(url);
+    onShowToast('Downloaded Customer Quick Start Guide!', 'success');
+  };
+
   return (
     <div id="settings-view-root" className="space-y-6 max-w-4xl mx-auto pb-16 md:pb-6 text-left">
       {/* Header */}
@@ -136,6 +149,54 @@ ${data.content?.map((g: any) => `* ${g.title} (${g.contentType})\n  Hook: ${g.ho
               </span>
             </div>
           </button>
+        </div>
+      </div>
+
+      {/* Customer Quick Start Guide & Documentation */}
+      <div className="bg-white p-6 rounded-xl border border-[#E2E0D8] shadow-2xs space-y-4">
+        <h2 className="text-base font-bold text-[#1E252B] border-b border-[#E7E6DF] pb-3 flex items-center gap-2">
+          <BookOpen className="w-4 h-4 text-[#0F2942]" />
+          <span>Customer Documentation & Quick Start Guide</span>
+        </h2>
+        <p className="text-xs text-[#64748B]">
+          Learn how to get the most out of LocalBiz Kit. Download the full 20-section customer handbook covering every tool, weekly rhythm, and backup practices.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <button
+            id="btn-download-guide"
+            onClick={handleDownloadGuide}
+            className="p-4 rounded-lg border border-[#E2E0D8] hover:border-[#0F2942] hover:bg-[#F8FAFC] transition-all flex items-start gap-3 group text-left"
+          >
+            <div className="w-8 h-8 rounded-md bg-[#F4F7FA] text-[#0F2942] group-hover:bg-[#0F2942] group-hover:text-white transition-colors flex items-center justify-center shrink-0">
+              <BookOpen className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-[#1E252B] group-hover:text-[#0F2942] block">
+                Download Quick Start Guide (.md)
+              </span>
+              <span className="text-[11px] text-[#64748B] mt-0.5 block">
+                Complete 20-section handbook ready to read offline or in any editor.
+              </span>
+            </div>
+          </button>
+
+          <a
+            href="mailto:lamapinygirlofmyschool@gmail.com?subject=LocalBiz%20Kit%20Customer%20Support"
+            className="p-4 rounded-lg border border-[#E2E0D8] hover:border-[#0F2942] hover:bg-[#F8FAFC] transition-all flex items-start gap-3 group text-left"
+          >
+            <div className="w-8 h-8 rounded-md bg-[#F4F7FA] text-[#0F2942] group-hover:bg-[#0F2942] group-hover:text-white transition-colors flex items-center justify-center shrink-0">
+              <Info className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-[#1E252B] group-hover:text-[#0F2942] block">
+                Email Customer Support
+              </span>
+              <span className="text-[11px] text-[#64748B] mt-0.5 block">
+                Direct assistance from the product team. Replies within 24–48 hours.
+              </span>
+            </div>
+          </a>
         </div>
       </div>
 
