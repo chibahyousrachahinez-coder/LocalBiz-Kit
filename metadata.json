@@ -1,0 +1,6 @@
+{
+  "name": "LocalBiz Kit",
+  "description": "Your small business. A stronger online presence. Marketing assets, copy, calendar, and customer response toolkit for local business owners.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
